@@ -66,6 +66,13 @@ COPY environment.yml* noop.txt /tmp/conda-tmp/
 RUN if [ -f "/tmp/conda-tmp/environment.yml" ]; then umask 0002 && /opt/conda/bin/conda env update -n base -f /tmp/conda-tmp/environment.yml; fi \
     && rm -rf /tmp/conda-tmp
 
+# Tensorflow doesn't install currently from conda, need to do a separate pip install
+#RUN python3 -m pip install tensorflow
+#RUN python3 -m pip install 'tensorflow[and-cuda]'
+#RUN python3 -m pip install keras-hub
+#RUN python3 -m pip install pydot
+#RUN python3 -m pip install keras-tuner
+
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>

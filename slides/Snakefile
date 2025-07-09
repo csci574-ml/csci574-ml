@@ -1,0 +1,51 @@
+#BEAMER_FILES=['slides-20250123-1']
+# alias smake='snakemake -c 1'
+# To weave and latex compile these files, I usually install the following packages:
+# sudo apt update
+# sudo apt install snakemake pandoc python3-pweave texlive texlive-fonts-recommended texlive-latex-recommended biber texlive-bibtex-extra texlive-fonts-extra texlive-science
+PANDOC_BEAMER_ARGS="--to=beamer --standalone --dpi=300"
+PANDOC_LATEX_ARGS="-s -N"
+
+rule all:
+	input:  ["l01-fundamentals-machine-learning.pdf", \
+	        ]
+
+rule pmd_to_md:
+	input:  "{file}.pmd"
+	output: "{file}.md"
+	shell:  "pweave -f markdown {input}"
+
+def pandoc_args(wildcards):
+	#if wildcards.file in BEAMER_FILES:
+	#	return PANDOC_BEAMER_ARGS
+	#else:
+	#	return PANDOC_LATEX_ARGS
+    # only doing beamer builds in this project
+	return PANDOC_BEAMER_ARGS
+
+rule md_to_tex:
+	input:  "{file}.md"
+	params: args=pandoc_args
+	output: "{file}.tex"
+	shell:  "pandoc {params.args} -o {output} {input}"
+
+rule tex_to_pdf:
+	input:  "{file}.tex"
+	output: "{file}.pdf"
+	shadow: "shallow"
+	shell:
+		"""
+		pdflatex {input} 
+		biber {wildcards.file} 
+		pdflatex {input} 
+		pdflatex {input}
+		"""
+
+rule slide_title_to_png:
+        input: "{file}.pdf"
+        output: "{file}.png"
+        shell: "convert -density 300 -quality 100 {input} {output}"
+
+rule clean:
+	shell:
+		"rm -f *.pdf *.tex *.aux *.bbl *.bcf *.blg *.lof *.log *.lot *.toc *.run.xml *.snm *.nav *~ .*~"
