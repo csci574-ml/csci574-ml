@@ -1,0 +1,25 @@
+// Place your key bindings in this file to override the defaults
+[
+  {
+    "key": "ctrl+shift+c",
+    "command": "workbench.action.tasks.runTask",
+    "when": "editorTextFocus",
+    "args": "make clean"
+  },
+  {
+    "key": "ctrl+shift+b",
+    "command": "workbench.action.tasks.build",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+t",
+    "command": "workbench.action.tasks.test",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+k",
+    "command": "workbench.action.tasks.runTask",
+    "when": "editorTextFocus",
+    "args": "slides smake all"
+  }
+]

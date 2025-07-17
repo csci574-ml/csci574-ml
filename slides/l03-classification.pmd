@@ -1,0 +1,95 @@
+---
+title: "L03: Classification"
+subtitle: "CSci 574 Machine Learning (Géron)  Ch. 3"
+author: Derek Harter
+date: Summer 2025
+theme: Madrid
+
+toc: false
+section-titles: false
+output:
+	beamer_presentation:
+	keep_tex: true
+classoption: aspectratio=169
+header-includes:
+  - \logo{\includegraphics[scale=0.18]{figures/etamu-logo}}
+  - \title [Memory]{My Title}
+  - \institute[East Texas A\&M]{Department of Computer Science \\East Texas A\&M University}
+  - \usepackage[backend=biber, style=apa]{biblatex}
+  - \addbibresource{slides.bib}
+  - \hypersetup{allcolors=blue, colorlinks=true}
+  - \usepackage[percent]{overpic}
+---
+
+# Introduction to the MNIST dataset
+
+We will be using the MNIST dataset in our discussion of ML classification.
+
+- MNIST is to ML as the "fruit fly" is to genetics
+- MNIST Properties:
+  - 70k black and white (single greyscale channel) images
+  - Each a digit, so 10 distinct classes 0-9
+  - Images are handwritten digit, 28x28 pixels
+
+Fetching the digits using `sklearn.datasets` (returns a `dict`, there are other keys that may be useful):
+
+\tiny
+```python
+from sklearn.datasets import fetch_openml
+mnist = fetch_openml('mnist_784', parser='auto')
+X, y = mnist['data'], mnist['target'].to_numpy()
+```
+
+```python
+X.shape
+```
+
+```python
+y.shape
+```
+
+# Introduction to the MNIST dataset
+
+::: columns
+::: {.column width=50%}
+\begin{figure}
+\includegraphics[scale=0.15]{figures/ch03-2-mnist-digit-examples}
+\label{fig:ch03-2-mnist-digit-examples}
+\caption{Digits from the MNIST dataset. \parencite[pg.182]{geron-2023}}
+\end{figure}
+::::
+:::: {.column width=50%}
+\vskip 0.2in
+For example, the first 100 digits
+\vskip 0.2in
+
+- Digits are already randomly shuffled, and dataset is fixed
+  - So we can safely split off last 10k digits and reserve for testing
+::::
+:::
+
+# Binary Classification
+
+- There are 2 fundamental types of supervised learning
+  1. **Regression**: like predicting real valued house price from features
+  2. **Classification**: for example, MNIST predict which digit among discrete labels 0-9
+- The simplest classification task is **Binary Classification**.
+  - For example, let's use MNIST, but make a 5 / not-5 predictor
+
+# Measuring Performance of a Classifier
+
+- Evaluating a classifier is significantly trickier than evaluating a regressor
+- For example, for 5 / not-5 can use accuracy of correct predictions.
+  - However, what is a good accuracy for this task?
+  - 90% of the values are not-5, and 10% are 5, so always guessing not-5 gives 90% accuracy
+- **Common Sense Baseline** You should always have a minimum common-sense baseline in mind when
+  evaluating a ML system performance.  
+  - For example, when data is skewed, accuracy that doesn't do better than always guessing the most common
+    class is not doing anything significant yet.
+
+# Measuring Accuracy using Cross-Validation
+
+
+# Bibliography
+\tiny
+\printbibliography

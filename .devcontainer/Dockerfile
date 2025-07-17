@@ -5,7 +5,7 @@ RUN . /etc/os-release && if [ "${VERSION_CODENAME}" != "bookworm" ]; then exit 1
 
 # Temporary: Upgrade python packages due to mentioned CVEs
 # They are installed by the base image (continuumio/anaconda3) which does not have the patch.
-COPY ./apply_security_patches.sh /tmp/apply_security_patches.sh
+COPY .devcontainer/apply_security_patches.sh /tmp/apply_security_patches.sh
 RUN chmod +x /tmp/apply_security_patches.sh
 RUN /tmp/apply_security_patches.sh
 
@@ -25,12 +25,13 @@ RUN chmod =2775 /opt/conda
 USER root
 
 # Copy scripts to execute
-COPY add-notice.sh /tmp/library-scripts/
+COPY .devcontainer/add-notice.sh /tmp/library-scripts/
 
 # Setup conda to mirror contents from https://github.com/ContinuumIO/docker-images/blob/master/anaconda3/debian/Dockerfile
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
-    PATH=/opt/conda/bin:$PATH
+    PATH=/opt/conda/bin:$PATH \
+    PYTHONPATH=$PYTHONPATH:/workspaces/csci574-ml/src
 ARG USERNAME=vscode
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y --no-install-recommends \
@@ -62,7 +63,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # Copy environment.yml (if found) to a temp location so we can update the environment. Also
 # copy "noop.txt" so the COPY instruction does not fail if no environment.yml exists.
 # COPY environment.yml* .devcontainer/noop.txt /tmp/conda-tmp/
-COPY environment.yml* noop.txt /tmp/conda-tmp/
+COPY environment.yml* .devcontainer/noop.txt /tmp/conda-tmp/
 RUN if [ -f "/tmp/conda-tmp/environment.yml" ]; then umask 0002 && /opt/conda/bin/conda env update -n base -f /tmp/conda-tmp/environment.yml; fi \
     && rm -rf /tmp/conda-tmp
 

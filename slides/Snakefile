@@ -8,6 +8,8 @@ PANDOC_LATEX_ARGS="-s -N"
 
 rule all:
 	input:  ["l01-fundamentals-machine-learning.pdf", \
+			 "l02-machine-learning-project.pdf", \
+			 "l03-classification.pdf", \
 	        ]
 
 rule pmd_to_md:

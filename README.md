@@ -34,7 +34,7 @@ Follow the instructions from [vscode-remote-devcontainer](https://github.com/csc
 The following assumes that you have a working VSCode DevContainer environment setup, and are able to use
 `git` tools to clone repositories and open up their folder in VSCode.
 
-This `class-resources` repository containes a `.devcontainer` with instructions on how to build a
+This `class-resources` repository contains a `.devcontainer` with instructions on how to build a
 container that has all of the Python tools that you need to use these class materials.  If you haven't
 already, start by performing an http (read only) clone of this class repository.  For example, from the command
 line you could
@@ -154,7 +154,7 @@ repository data directory for local use.
 **docs**/
 
 Additional documentation for the class.  Class syllabus, and possible
-assingment descriptions, slides and handouts will be placed here.
+assignment descriptions, slides and handouts will be placed here.
 
 **figures**/
 
