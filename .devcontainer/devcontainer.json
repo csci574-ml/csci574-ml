@@ -33,9 +33,9 @@
 	},
 
     // enable gpu access / passthrough
-    "runArgs": [
-		"--gpus=all"
-    ],
+    //"runArgs": [
+	//	"--gpus=all"
+    //],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [8888],
