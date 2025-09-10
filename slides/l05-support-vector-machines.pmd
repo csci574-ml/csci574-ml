@@ -1,0 +1,39 @@
+---
+title: "L05: Suppoert Vector Machines"
+subtitle: "CSci 574 Machine Learning (Géron)  Ch. 5"
+author: Derek Harter
+date: Summer 2025
+theme: Madrid
+
+toc: false
+section-titles: false
+output:
+	beamer_presentation:
+	keep_tex: true
+classoption: aspectratio=169
+header-includes:
+  - \logo{\includegraphics[scale=0.18]{figures/etamu-logo}}
+  - \title [SVM]{Support Vector Machines}
+  - \institute[East Texas A\&M]{Department of Computer Science \\East Texas A\&M University}
+  - \usepackage[backend=biber, style=apa]{biblatex}
+  - \addbibresource{slides.bib}
+  - \hypersetup{allcolors=blue, colorlinks=true}
+  - \usepackage[percent]{overpic}
+---
+
+# Linear SVM Classification
+
+- When two classes can be separated by a line (hyperplane). Figure \ref{fig:ch05-1-large-margin-classification}, left
+  - They are **linearly separable**
+- SVM classifier fits the widest possible street. Figure \ref{fig:ch05-1-large-margin-classification}, right
+  - This is called **large margin classification**
+
+\begin{figure}
+\includegraphics[scale=0.33]{figures/ch05-1-large-margin-classification}
+\caption{Large margin classification \parencite[pg.287]{geron-2023}}
+\label{fig:ch05-1-large-margin-classification}
+\end{figure}
+
+# Bibliography
+\tiny
+\printbibliography

@@ -10,6 +10,7 @@ rule all:
 	input:  ["l01-fundamentals-machine-learning.pdf", \
 			 "l02-machine-learning-project.pdf", \
 			 "l03-classification.pdf", \
+			 "l05-support-vector-machines.pdf", \
 	        ]
 
 rule pmd_to_md:
