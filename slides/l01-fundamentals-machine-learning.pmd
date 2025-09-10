@@ -199,7 +199,7 @@ In **unsupervised learning** the training data is unlabeled, the system tries to
 - In **batch learning** the system is incapable of learning incrementally: it must be trained using all the available data.
   - Typically takes time so needs to be done *offline*.  
   - First trained, then once works sufficiently well, put into production.
-  - In many situations, performance decays because world continues to evolve while the model remains uncahnged.
+  - In many situations, performance decays because world continues to evolve while the model remains unchanged.
     **model rot** or **data drift**
 - **online learning** train system incrementally by feeding it data sequentially or in small groups (*mini-batches*)
   - Useful for systems that need to adapt to change extremely rapidly.
@@ -306,7 +306,7 @@ Common Solution: **holdout validation** data
   - Perhaps do this 1 time for all hyperparameter turning, or randomly holdout different validation data each time.
   - Iterate model selection and hyperparameter search evaluating on holdout validation data.
   - Best model / parameters for this search, then train a final model on full training/validation data
-  - Final check of best model on held back test data then can determine if you overtuned hyperparameters
+  - Final check of best model on held back test data then can determine if you over tuned hyperparameters
     and it doesn't really generalize well or not on real unseen data.
 
 # train / validation / test Set Model Selection

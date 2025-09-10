@@ -26,7 +26,7 @@ header-includes:
 - Frame the problem
   - Know the objective (business, academic).
   - Determine the training supervision needed: supervised, unsupervised, semi-supervised, etc.
-  - Is it a classificatin task, regression or something else?
+  - Is it a classification task, regression or something else?
   - Use batch learning or online techniques.
 - Select a performance measure
   - For regression, might use root mean square error (RMSE) or mean absolute error (MAE).
@@ -50,7 +50,7 @@ header-includes:
 - So pick some instances randomly that will not be used to train the model, only to evaluate the models
   ability to generalize.
   - Typically pick 20% of the dataset, or less if the dataset is very large.
-- Careful if you always shuffle randomly and train many times, you may be inadvertantly biasing your model
+- Careful if you always shuffle randomly and train many times, you may be inadvertently biasing your model
   - Thus for a project should split only 1 time, or split with a known seed so you always get the same train/test data
     split.
   - Even that can be problematic, what if the dataset changes?  

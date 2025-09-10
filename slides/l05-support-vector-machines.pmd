@@ -1,8 +1,8 @@
 ---
-title: "L05: Suppoert Vector Machines"
+title: "L05: Support Vector Machines"
 subtitle: "CSci 574 Machine Learning (Géron)  Ch. 5"
 author: Derek Harter
-date: Summer 2025
+date: Fall 2025
 theme: Madrid
 
 toc: false
@@ -21,18 +21,72 @@ header-includes:
   - \usepackage[percent]{overpic}
 ---
 
-# Linear SVM Classification
+# Large Margin Classification
 
 - When two classes can be separated by a line (hyperplane). Figure \ref{fig:ch05-1-large-margin-classification}, left
   - They are **linearly separable**
 - SVM classifier fits the widest possible street. Figure \ref{fig:ch05-1-large-margin-classification}, right
   - This is called **large margin classification**
 
+\vskip 0.1in
+
 \begin{figure}
-\includegraphics[scale=0.33]{figures/ch05-1-large-margin-classification}
+\includegraphics[scale=0.35]{figures/ch05-1-large-margin-classification}
 \caption{Large margin classification \parencite[pg.287]{geron-2023}}
 \label{fig:ch05-1-large-margin-classification}
 \end{figure}
+
+# Linear Support Vector Machine
+
+- Notice that adding more training instances "off the street" will not affect the decision boundary at all.
+  - It is fully determined (or "supported") by the instances located on the edge of the street
+  - These instances are called the **support vectors**
+- A Support Vector Machine (SVM) is a machine learning model capable of performing linear or nonlinear classification and regression.
+- It works by identifying support vectors to determine the largest margin decision boundary
+
+# SVMs are Sensitive to Scaling
+
+- In the left plot (Figure \ref{fig:ch05-2-svm-sensitivity-to-feature-scales}) vertical scale is much larger than
+  the horizontal scale, gives a almost horizontal large margin with these support vectors.
+- In the right plot (Figure \ref{fig:ch05-2-svm-sensitivity-to-feature-scales}) after standard feature scaling,
+  the decision boundary had a much different slope.
+
+\vskip 0.1in
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/ch05-2-svm-sensitivity-to-feature-scales}
+\caption{SVM sensitivity to feature scales. \parencite[pg.288]{geron-2023}}
+\label{fig:ch05-2-svm-sensitivity-to-feature-scales}
+\end{figure}
+
+
+# Soft Margin Classification
+
+- If we strictly require all instances off street and on correct side of margin, this is
+  called **hard margin classification**.
+- Only possibly when data are linearly separably.
+  - Figure \ref{fig:ch05-3-hard-margin-outliers} left, impossible to find hard margin, not linearly separable.
+- Also sensitive to outliers.
+  - Figure \ref{fig:ch05-3-hard-margin-outliers} right, decision boundary ends up very different if there is an outlier here, might not generalize.
+
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/ch05-3-hard-margin-outliers}
+\caption{Hard margin sensitivity to outliers. \parencite[pg.288]{geron-2023}}
+\label{fig:ch05-3-hard-margin-outliers}
+\end{figure}
+
+# Soft Margin Classification
+
+- To avoid both, find balance between keeping street as large as possible and limiting the **margin violations**
+  - This is **soft margin classification**
+- SVM use regularization hyperparameter `C`
+  - When `C` is low, large margin, more margin violations allowed, but if too low can cause underfitting.
+  - When `C` is high, small margins, less margin violations allowed, but can overfit and be sensitive to outliers
+
+\begin{block}{SVM C Regularization}
+ If your SVM model is overfitting, you can regularize it by reducing C, leading to softer margins which will tend to be better at generalizing performance to unseen data.
+\end{block}
 
 # Bibliography
 \tiny

@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "slides smake all",
+            "type": "shell",
+            "command": "snakemake",
+            "args": [
+                "-c 1",
+                "all"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/slides"
+            },
+            "group": {
+                "kind": "build",
+            },
+            "presentation": {
+                "clear": true
+            }
+        },
+        {
+            "label": "slides smake clean",
+            "type": "shell",
+            "command": "snakemake",
+            "args": [
+                "-c 1",
+                "clean"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/slides"
+            },
+            "group": "build",
+            "presentation": {
+                "clear": true
+            }
+        }
+   ]
+}
