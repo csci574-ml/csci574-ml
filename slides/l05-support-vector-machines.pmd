@@ -23,10 +23,19 @@ header-includes:
 
 # Large Margin Classification
 
-- When two classes can be separated by a line (hyperplane). Figure \ref{fig:ch05-1-large-margin-classification}, left
+::: columns
+::: {.column width=50%}
+When two classes can be separated by a line (hyperplane).
+
   - They are **linearly separable**
-- SVM classifier fits the widest possible street. Figure \ref{fig:ch05-1-large-margin-classification}, right
+::::
+:::: {.column width=50%}
+SVM classifier fits the widest possible street.
+
   - This is called **large margin classification**
+::::
+:::
+
 
 \vskip 0.1in
 
@@ -46,15 +55,21 @@ header-includes:
 
 # SVMs are Sensitive to Scaling
 
-- In the left plot (Figure \ref{fig:ch05-2-svm-sensitivity-to-feature-scales}) vertical scale is much larger than
-  the horizontal scale, gives a almost horizontal large margin with these support vectors.
-- In the right plot (Figure \ref{fig:ch05-2-svm-sensitivity-to-feature-scales}) after standard feature scaling,
-  the decision boundary had a much different slope.
+::: columns
+::: {.column width=50%}
+In the left plot vertical scale is much larger than
+the horizontal scale, gives a almost horizontal large margin with these support vectors.
+::::
+:::: {.column width=50%}
+In the right plot  after standard feature scaling,
+the decision boundary had a much different slope.
+::::
+:::
 
 \vskip 0.1in
 
 \begin{figure}
-\includegraphics[scale=0.4]{figures/ch05-2-svm-sensitivity-to-feature-scales}
+\includegraphics[scale=0.45]{figures/ch05-2-svm-sensitivity-to-feature-scales}
 \caption{SVM sensitivity to feature scales. \parencite[pg.288]{geron-2023}}
 \label{fig:ch05-2-svm-sensitivity-to-feature-scales}
 \end{figure}
@@ -62,13 +77,21 @@ header-includes:
 
 # Soft Margin Classification
 
-- If we strictly require all instances off street and on correct side of margin, this is
-  called **hard margin classification**.
-- Only possibly when data are linearly separably.
-  - Figure \ref{fig:ch05-3-hard-margin-outliers} left, impossible to find hard margin, not linearly separable.
-- Also sensitive to outliers.
-  - Figure \ref{fig:ch05-3-hard-margin-outliers} right, decision boundary ends up very different if there is an outlier here, might not generalize.
+If we strictly require all instances off street and on correct side of margin, this is
+called **hard margin classification**.
 
+::: columns
+::: {.column width=50%}
+Only possible when data are linearly separably.
+
+- Figure \ref{fig:ch05-3-hard-margin-outliers} left, impossible to find hard margin, not linearly separable.
+::::
+:::: {.column width=50%}
+Also sensitive to outliers.
+
+- Figure \ref{fig:ch05-3-hard-margin-outliers} right, decision boundary ends up very different if there is an outlier here, might not generalize.
+::::
+:::
 
 \begin{figure}
 \includegraphics[scale=0.4]{figures/ch05-3-hard-margin-outliers}
@@ -78,15 +101,137 @@ header-includes:
 
 # Soft Margin Classification
 
+::: columns
+::: {.column width=70%}
 - To avoid both, find balance between keeping street as large as possible and limiting the **margin violations**
   - This is **soft margin classification**
 - SVM use regularization hyperparameter `C`
   - When `C` is low, large margin, more margin violations allowed, but if too low can cause underfitting.
   - When `C` is high, small margins, less margin violations allowed, but can overfit and be sensitive to outliers
-
-\begin{block}{SVM C Regularization}
+::::
+:::: {.column width=30%}
+\begin{alertblock}{SVM C Regularization}
  If your SVM model is overfitting, you can regularize it by reducing C, leading to softer margins which will tend to be better at generalizing performance to unseen data.
-\end{block}
+\end{alertblock}
+::::
+:::
+
+# Nonlinear SVM Classification
+
+- Many datasets are not even close to being linearly separable.
+- One approach is to add more polynomial feature combinations of the original features.
+- This can result in transforming data into a linearly separable dataset.
+
+\begin{figure}
+\includegraphics[scale=0.25]{figures/ch05-5-linear-separability}
+\label{fig:ch05-5-linear-separability}
+\end{figure}
+
+::: columns
+::: {.column width=50%}
+Single feature $x_1$ is not linearly separable.
+::::
+:::: {.column width=50%}
+But if we add new polynomial feature $x_2 = (x_1)^2$, resulting 2D dataset is linearly separable.
+::::
+:::
+
+# Adding Nonlinear Features by Hand
+
+As we have done previously for logistic regression, add in nonlinear polynomial features by hand.
+
+::: columns
+::: {.column width=60%}
+\begin{figure}
+\includegraphics[scale=0.35]{figures/ch05-6-linear-svm-polynomial-features}
+\label{fig:ch05-6-linear-svm-polynomial-features}
+\caption{Linear SVM classifier using polynomial features.}
+\end{figure}
+::::
+:::: {.column width=40%}
+\tiny
+```python, evaluate=False
+# adding degree 3 polynomials combinations
+# to 2 feature nonlinear dataset
+# makes resulting nonlinear features
+# linearly separable
+X, y = make_moons(n_samples=100, noise=0.15)
+
+polynomial_svm_clf = Pipeline([
+    ("poly_features", PolynomialFeatures(degree=3)),
+    ("scaler", StandardScaler()),
+    ("clf", SVC(kernel='linear', C=10, max_iter=10000))
+])
+
+polynomial_svm_clf.fit(X, y)
+```
+::::
+:::
+
+# Polynomial Kernel, the **Kernel Trick**
+
+- Adding polynomial features can work with all sorts of ML (not just SVMs)
+  - But at low polynomial degree, cannot deal with complex datasets
+  - And at high polynomial degree, creates huge (combinatorial explosion) number of features (slow).
+
+\vskip 0.1in
+
+- When using SVM, can use the **kernel trick**
+  - Can give same result as if added many polynomial features, without the computational
+    costs of actually adding them.
+
+\vskip 0.1in
+
+- The kernel trick is built-in to the `scikit-learn` `SVC` class.
+
+# SVC Polynomial Kernel
+
+::: columns
+::: {.column width=60%}
+\begin{figure}
+\includegraphics[scale=0.35]{figures/ch05-7-svc-polynomial-kernel}
+\label{fig:ch05-7-svc-polynomial-kernel}
+\caption{SVC Using degree 3 polynomial kernel (implemented using the kernel trick).}
+\end{figure}
+::::
+:::: {.column width=40%}
+\tiny
+```python, evaluate=False
+# using a degree 3 polynomial kernel for a SVC,
+# this implementation will be much faster for large
+# polynomial degrees / large datasets
+from sklearn.svm import SVC
+
+poly_kernel_svm_clf = Pipeline([
+    ("scaler", StandardScaler()),
+    ("clf", SVC(kernel="poly", degree=3, coef0=1, C=5))
+])
+
+poly_kernel_svm_clf.fit(X, y)
+```
+::::
+:::
+
+# SVM Kernel Regularization
+
+::: columns
+::: {.column width=50%}
+\begin{figure}
+\includegraphics[scale=0.3]{figures/ch05-7-underfit}
+\label{fig:ch05-7-underfit}
+\caption{SVC Using degree 3 polynomial kernel, large regularization, if need to underfit.}
+\end{figure}
+::::
+:::: {.column width=50%}
+\begin{figure}
+\includegraphics[scale=0.3]{figures/ch05-7-overfit}
+\label{fig:ch05-7-underfit}
+\caption{SVC Using degree 10 polynomial kernel, small regularization, if need to overfit.}
+\end{figure}
+::::
+:::
+
+
 
 # Bibliography
 \tiny
