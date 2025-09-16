@@ -231,6 +231,77 @@ poly_kernel_svm_clf.fit(X, y)
 ::::
 :::
 
+# Similarity Features
+
+- Instead of combinations of polynomial terms of features, can compute new nonlinear features using a **similarity function**.
+- Measures how much each instance resembles a particular **landmark**
+
+::: columns
+::: {.column width=50%}
+Two landmarks at $x_1 = -2$ and $x_1 = 1$ and Gaussian RBF similarity function.
+
+\begin{figure}
+\includegraphics[scale=0.25]{figures/ch05-8-similarity-landmarks}
+\label{fig:ch05-8-similarity-landmarks}
+\end{figure}
+::::
+:::: {.column width=50%}
+New computed similarity features $x_2$ and $x_3$ are now linearly separable.
+
+\begin{figure}
+\includegraphics[scale=0.25]{figures/ch05-8-new-gaussian-features}
+\label{fig:ch05-8-new-gaussian-features}
+\end{figure}
+::::
+:::
+
+# Gaussian Radial Basis Function (RBF) Kernel
+
+- Similarity feature method can be used with any ML algorithm, but can be computationally expensive to compute all the
+  additional features.
+- SVM **kernel trick** mathematical magic that allows for computation of gaussian kernels for SVM fitting, without actual
+  computation of the new similarity features.
+
+# Gaussian Radial Basis Function (RBF) Kernel
+
+\begin{figure}
+\includegraphics[scale=0.25]{figures/ch05-9-SVM-classifier-RBF-kernel}
+\label{fig:ch05-9-SVM-classifier-RBF-kernel}
+\caption{SVM classifiers using Gaussian RBF kernels. \parencite[pg.299]{geron-2023}}
+\end{figure}
+
+# SVM Computational Complexity
+
+- `scikit-learn` `LinearSVC` does not support kernel trick, but scales linearly with number of training instances (fast)
+  - training time complexity $\mathcal{O}(m \times n)$
+- `SVC` class supports **kernel trick**
+  - training complexity between $\mathcal{O}(m^2 \times n)$ and $\mathcal{O}(m^3 \times n)$
+  - here $m$ is number of trainining instancs, so can be very slow when number of training instances is large
+  - scales well with number of features $n$
+- `SGDClassifier` also performs large margin classification by default, using stochastic gradient descent for incremental learning.
+  - still a linear classifier
+  - so has complexity complexity $\mathcal{O}(m \times n)$, but can do out-of-core learning
+
+# SVM Computational Complexity
+
+| **Class**       | **Time complexity **      | **Out-of-core support** | **Scaling required** | **Kernel trick** |
+|-----------------|---------------------------|-------------------------|----------------------|------------------|
+| `LinearSVC`     | $\mathcal{O}(m \times n)$ | No                      | Yes                  | No               |
+| `SVC`           | $\mathcal{O}(m^2 \times n)$ to $\mathcal{O}(m^3 \times n)$ | No | Yes      | Yes              |
+| `SGDClassifier` | $\mathcal{O}(m \times n)$ | Yes                     | Yes                  | No               |
+
+# SVM Regression
+
+- Can use SVM for regression, tweak objective function
+  - SVM regression fits as many instances as possible **on** the street
+  - Instead of fitting largest possible street between classes (while limiting margin violations)
+- SVM regression uses hyperparameter `epsilon` or $\epsilon$ to control width of street.
+
+\begin{figure}
+\includegraphics[scale=0.20]{figures/ch05-10-SVM-regression}
+\label{fig:ch05-10-SVM-regression}
+\caption{SVM regression, effects of epsilon metaparameter. \parencite[pg.302]{geron-2023}}
+\end{figure}
 
 
 # Bibliography
