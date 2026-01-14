@@ -40,7 +40,7 @@ already, start by performing an http (read only) clone of this class repository.
 line you could
 
 ```
-$ git clone https://github.com/csci574-ml/class-resources.git csci574-class-resources
+$ git clone https://github.com/csci574-ml/csci574-ml.git
 ```
 
 As shown here this creates a new folder called `csci574-class-resources` in the current working directory.
