@@ -34,7 +34,7 @@ Follow the instructions from [vscode-remote-devcontainer](https://github.com/csc
 The following assumes that you have a working VSCode DevContainer environment setup, and are able to use
 `git` tools to clone repositories and open up their folder in VSCode.
 
-This `class-resources` repository contains a `.devcontainer` with instructions on how to build a
+This `csci574-ml` repository contains a `.devcontainer` with instructions on how to build a
 container that has all of the Python tools that you need to use these class materials.  If you haven't
 already, start by performing an http (read only) clone of this class repository.  For example, from the command
 line you could
@@ -43,7 +43,7 @@ line you could
 $ git clone https://github.com/csci574-ml/csci574-ml.git
 ```
 
-As shown here this creates a new folder called `csci574-class-resources` in the current working directory.
+As shown here this creates a new folder called `csci574-ml` in the current working directory.
 Start VSCode and open up this folder.  If needed, then reopen the folder in a DevContainer.  As mentioned, there
 are docker files in the `.devcontainer` subdirectory that will build a container with a working Python
 scientific stack development environment.  This container also starts a Jupyter Lab server running on
