@@ -1,0 +1,14 @@
+wheel==0.40.0
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+pytest
+statsmodels
+ipykernel
+ipywidgets
+jupyter
+jupyterlab
+pydot
+pweave

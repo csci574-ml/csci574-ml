@@ -1,24 +1,25 @@
 {
+	"name": "Class Python / Jupyter Work Environment",
 	"build": {
-		"dockerfile": "./Dockerfile",
-		"context": ".."
+		"dockerfile": "Dockerfile",
+		"context": ".",
+		"args": {
+			"PYTHON_ENV": "base",
+			"CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}",
+			"USERNAME": "student"
+			//"USERNAME": "${env:USER}"
+		}
 	},
-	"features": {
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "none"
-        },
-		"ghcr.io/devcontainers/features/git:1": {
-            "version": "latest",
-            "ppa": "false"
-        }
-    },
 	// Configure tool-specific properties.
 	"customizations": {
 		// Configure properties specific to VS Code.
 		"vscode": {
 			// Set *default* container specific settings.json values on container create.
+			// NOTE: the python environment needs to match the PYTHON_ENV passed into the Dockerfile that will be
+			// the name of the venv that is created and setup by the build			
 			"settings": {
-				"python.defaultInterpreterPath": "/opt/conda/bin/python"
+				"python.defaultInterpreterPath": "/opt/base/bin/python3",
+				"python.selectInterpreter": "/opt/base/bin/python3"
 			},
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
@@ -27,23 +28,35 @@
 				"ms-toolsai.jupyter",
 				"ms-toolsai.vscode-jupyter-cell-tags",
 				"ms-toolsai.jupyter-renderers",
-				"ms-toolsai.jupyter-keymap"				
+				"ms-toolsai.jupyter-keymap",
+				"ms-python.autopep8"
 			]
 		}
 	},
-
-    // enable gpu access / passthrough
-    //"runArgs": [
-	//	"--gpus=all"
-    //],
-
+	// enable gpu access / passthrough
+	"runArgs": [
+		//	"--gpus=all",
+		"--hostname=csci574"
+	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [8888],
-
+	"forwardPorts": [
+		8888
+	],
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "python --version",
-	"postStartCommand": "nohup bash -c 'jupyter lab --NotebookApp.token='' --NotebookApp.password='' --ip=0.0.0.0 --port=8888 --allow-root &' > nohup.out",
-
+	// For some reason recent install to tensorflow w/ cuda is unable to load GPU unless we explicitly
+	// specify the library path wither the nvidia library .so can be found.  This is the correct path
+	// when we install tensorflow and cuda using pip currently.  This also should be put into the .bashrc
+	// file if we want to run python scripts to use gpu from command line
+	//  export LD_LIBRARY_PATH=$(find /opt/conda -name "*.so*" | grep nvidia | xargs dirname | sort -u | paste -d ":" -s -)
+	// Setting the tensorflow variables TF_* here should make them available in environment, and available when jupyter
+	// lab server is run
+	"remoteEnv": {
+		"TF_CPP_MIN_LOG_LEVEL": "3", // usually tensorflow warning messages are not useful unless having tf/GPU configuration issues, this turns them off
+		"TF_ENABLE_ONEDNN_OPTS": "0" // This turns off ONEDNN, which was throwing lots of annoying warnings if not disabled currently
+	},
+	"postStartCommand": "nohup bash -c 'jupyter lab --ip=0.0.0.0 --port=8888 --allow-root --NotebookApp.token=`` --NotebookApp.password=`` ' > nohup.out 2>&1",
 	// Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	"remoteUser": "student"
+	//"remoteUser": "${env:USER}"
 }
