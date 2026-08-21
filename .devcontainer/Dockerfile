@@ -14,7 +14,8 @@ RUN groupadd --gid $USER_GID $USERNAME \
     # Install additional needed os packages here
     # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
     && apt-get update \
-    && apt-get install -y sudo nvtop \
+    # could add in ffmpeg here, used in some lecture videos
+    && apt-get install -y sudo htop nvtop \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
