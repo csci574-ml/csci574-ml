@@ -3,7 +3,7 @@
 This repository contains materials and instructions for our graduate level
 CSci 574: Machine Learning class from
 [East Texas A&M University - Commerce](http://etamu.edu), the
-[Department of Computer Science](https://new.etamu.edu/department-of-computer-science-and-information-systems/).
+[Department of Computer Science](https://www.etamu.edu/computer-science-and-information-systems/).
 
 You should start by following the Getting Started instructions next,
 to get your required Scientific Python computing stack set up on your
