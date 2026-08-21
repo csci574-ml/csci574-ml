@@ -27,7 +27,7 @@ is one of the most popular collections of libraries and tools used by
 professional data scientists and machine learning specialists.
 
 To get started, first set up a Visual Studio Code (VSCode) DevContainer environment.
-Follow the instructions from [vscode-remote-devcontainer](https://github.com/csci430-os/vscode-remote-devcontainer)
+Follow the instructions from [Setting Up Git / Docker / VSCode for Class Assignments](https://github.com/etamu-class/vscode-docker-devcontainer)
 
 ## Access Class Lectures and Materials
 
